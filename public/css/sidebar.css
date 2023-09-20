@@ -1,0 +1,66 @@
+.sidebar {
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+
+  overflow-x: hidden; /* Disable horizontal scroll */
+  border-color: transparent;
+  padding-left: 20px;
+
+  justify-content: center;
+  align-items: right;
+}
+
+.sidebar#log-in-left {
+  min-width: 380px;
+  max-width: 380px;
+  height: 100%;
+  left: 0;
+  background-color: #a23535;
+  border-right: var(--accent-color);
+  border-right-width: 5px;
+  border-style: solid;
+  padding-top: 175px;
+  color: white;
+  font-size: 44px;
+  font-weight: bold;
+  overflow-wrap: normal;
+}
+
+.sidebar#left {
+  min-width: 200px;
+  max-width: 200px;
+  height: 100%;
+  left: 0;
+  background-color: #a23535;
+  border-right: var(--accent-color);
+  border-right-width: 5px;
+  border-style: solid;
+  padding-top: 25px;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  overflow-wrap: normal;
+}
+
+.sidebar#right {
+  width: 20%;
+  height: 50%;
+  position: fixed;
+  right: 0;
+  float: right;
+  border-left-width: 5px;
+  border-style: solid;
+  /* border-color: #555; */
+}
+
+#RBE-logo {
+  background-image: url("/Resources/RhoBetaEpsilon_Logo_noBackground.png");
+  background-repeat: no-repeat;
+  background-size: 200px;
+  min-height: 200px;
+  min-width: 380px;
+  display: block;
+  background-color: #a23535;
+  border: none;
+}

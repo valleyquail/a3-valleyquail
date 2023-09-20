@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+:root {
+  --primary-color: #a23535;
+  --secondary-color: #ffdf50;
+  --accent-color: #000;
+}
+
+body {
+  margin-left: 320px;
+  font-family: "Ubuntu", Georgia, "Times New Roman", Times, serif;
+}
+.sidebar > a:not(:first-child) {
+  line-height: 1em;
+  display: inline-block;
+  text-decoration: none;
+  padding-top: 24px;
+  /* margin: 42px; */
+}
+
+form {
+  /* margin-left: 20px; */
+  /* margin-top: 200px; */
+  max-width: 450px;
+  border-color: #000;
+  border-style: solid;
+  padding: 0px 20px 0px 20px;
+}
+
+input {
+  height: 32px;
+  max-width: 240px;
+  position: relative;
+  margin-left: 15px;
+  margin-bottom: 15px;
+}
+#number-of-hours {
+  width: 60px;
+}
+
+#reasoning-box {
+  width: 450px;
+  height: 150px;
+  justify-content: left;
+  align-items: flex-start;
+}
+
+textarea {
+  resize: vertical;
+  font-size: 18px;
+  margin-top: 15px;
+}
+
+label {
+  font-size: large;
+  margin-bottom: 50px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  padding-top: 15px;
+}
+
+.grid-list {
+  display: grid;
+}
+
+input[type="button"] {
+  margin: 20px 20px 20px 20px;
+  font-size: 20px;
+  border: var(--secondary-color);
+  height: 48px;
+  width: 150px;
+  border-radius: 10px;
+  color: white;
+  background-color: #a23535;
+  transition-duration: 0.2s;
+}
+
+input[type="button"]:hover {
+  background-color: #801313;
+}
+
+button {
+  margin: 0px 20px 0px 0px;
+  font-size: 14px;
+  border: var(--secondary-color);
+  height: 20px;
+  width: 96px;
+  border-radius: 10px;
+  color: white;
+  background-color: #a23535;
+  transition-duration: 0.2s;
+}

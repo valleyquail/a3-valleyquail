@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, maximum-scale=3, minimum-scale=0.5"
+    />
+    <script src="js/homepage_main.js"></script>
+    <link rel="stylesheet" href="css/homepage.css" />
+    <link rel="stylesheet" href="css/sidebar.css" />
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  </head>
+
+  <body>
+    <div class="sidebar" id="left">
+      <a id="RBE-logo"></a>
+      <a id="home-button">Home</a>
+      <a id="standing-button">Current Standing</a>
+      <a id="feedback-form">Feedback</a>
+    </div>
+
+    <h1>Temp Hour Submission Form</h1>
+    <form>
+      <ul>
+        <li>
+          <label for="date-of-hours">When did you complete your hours?</label>
+          <input type="date" id="date-of-hours" required />
+        </li>
+        <li>
+          <label for="number-of-hours">How many hours did you complete? </label>
+          <input type="number" id="number-of-hours" required /><a
+            style="padding-left: 15px"
+            >hours</a
+          >
+        </li>
+        <li>
+          <label for="reasoning-box">
+            Brief description of what you did to earn these hours:
+          </label>
+          <textarea id="reasoning-box" required></textarea>
+        </li>
+      </ul>
+      <a id="error-message" style="width: 200px"></a><br />
+      <input
+        type="submit"
+        value="Submit Hours"
+        formaction="/submit"
+        id="submit-button"
+      />
+    </form>
+    <div class="sidebar" id="right">
+      <h1 id="current-hours">Current Hours:</h1>
+      <div class="grid-list" id="listOfEntries"></div>
+    </div>
+  </body>
+</html>

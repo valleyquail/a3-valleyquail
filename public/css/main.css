@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+:root {
+  --primary-color: #a23535;
+  --secondary-color: #ffdf50;
+  --accent-color: #000;
+}
+
+body {
+  margin-left: 380px;
+  font-family: "Ubuntu", Georgia, "Times New Roman", Times, serif;
+  background-color: white;
+}
+
+form {
+  margin-left: 20px;
+  margin-top: 200px;
+  max-width: 100px;
+}
+
+input {
+  height: 32px;
+  width: 240px;
+  position: relative;
+}
+
+label {
+  font-size: large;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  padding-top: 15px;
+}
+
+button {
+  margin: 20px 20px 20px 20px;
+  font-size: 20px;
+  border: var(--secondary-color);
+  height: 48px;
+  width: 96px;
+  border-radius: 10px;
+  color: white;
+  background-color: #a23535;
+  transition-duration: 0.2s;
+}
+
+button:hover {
+  background-color: #801313;
+}
