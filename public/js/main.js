@@ -25,12 +25,12 @@ const submit = async function (event) {
 
 const login_validate = async function (event) {
   // username = document.querySelector('#user_name_box').get;
-  // const reponse = await fetch("homepage.html", {
-  //   method: "GET",
-  //   url: "homepage.html",
-  // });
-  // const text = await reponse.text();
-  // console.log("Text:", text);
+  const reponse = await fetch("/login", {
+    method: "POST",
+  });
+  const text = await reponse.text();
+  window.location.href = "/homepage.html";
+  console.log("Text:", text);
 };
 
 window.onload = function () {

@@ -1,104 +1,61 @@
+require("dotenv").config();
+// console.log(process.env);
 const mongoose = require("mongoose");
+
+const bootstrap = require("bootstrap");
 
 const { Schema, model } = mongoose;
 
 const express = require("express");
 app = express();
-port = 3000;
+port = 8080;
 
 const router = express.Router();
-app.use(express.static("public"));
+app.use(express.static("public/"));
 app.use(express.json());
 
-// mongoose.connect(
-//   `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
-// );
+// const username = encodeURIComponent(process.env.MONGO_USER);
+const password = encodeURIComponent(process.env.PASS);
 
-router.get("/", function (result, request) {
-  result.send("hello");
+mongoose.connect(
+  `mongodb+srv://${process.env.MONGO_USER}:${password}@${process.env.HOST}`
+);
+
+app.get("/", function (req, res) {
+  res.redirect("/index.html");
 });
 
-// const server = http.createServer(function (request, response) {
-//   if (request.method === "GET") {
-//     handleGet(request, response);
-//   } else if (request.method === "POST") {
-//     handlePost(request, response);
-//   }
-// });
+app.post("/login", function (req, res) {
+  res.send("/public/homepage.html");
+});
 
-// const handleGet = function (request, response) {
-//   const filename = dir + request.url.slice(1);
+app.post("/add", async (req, res) => {
+  const result = await collection.insertOne(req.body);
+  res.json(result);
+});
 
-//   if (request.url === "/") {
-//     sendFile(response, "public/index.html");
-//   } else {
-//     sendFile(response, filename);
-//   }
-//   console.log("this is the file: ", filename);
-// };
+app.post("/update", async (req, res) => {
+  const result = await collection.updateOne(
+    { _id: new ObjectId(req.body._id) },
+    { $set: { name: req.body.name } }
+  );
 
-// const handlePost = function (request, response) {
-//   let dataString = "";
+  res.json(result);
+});
 
-//   request.on("data", function (data) {
-//     dataString += data;
-//   });
+app.post("/remove", async (req, res) => {
+  const result = await collection.deleteOne({
+    _id: new ObjectId(req.body._id),
+  });
 
-//   request.on("end", function () {
-//     let data = JSON.parse(dataString);
+  res.json(result);
+});
 
-//     if (data.mode === "clear") {
-//       appdata = [];
-//     } else if (data.mode === "read") {
-//       let text = JSON.stringify(appdata);
-//       response.writeHead(200, "OK", { "Content-Type": "text/plain" });
-//       response.end(text);
-//       return;
-//     } else if (data.mode === "delete") {
-//       // console.log("current list: ", JSON.stringify(appdata));
-//       const target = data.id;
-//       console.log("Target:", target);
-//       for (i = 0; i < appdata.length; i++) {
-//         if (appdata[i].id == target) {
-//           console.log("Deleting the element: ", appdata[i]);
-//           let temp = appdata.splice(i, 1);
-//           console.log("Removed: ", JSON.stringify(temp));
-//           console.log("New appdata", JSON.stringify(appdata));
-//           break;
-//         }
-//       }
-//     } else {
-//       console.log(data);
-//       const entry = {
-//         date: data.entry.date,
-//         numHours: parseInt(data.entry.numHours),
-//         reason: data.entry.reason,
-//         id: data.entry.id,
-//       };
-//       appdata.push(entry);
-//     }
+const logger = (req, res, next) => {
+  console.log("url:", req.url);
+  next();
+};
 
-//     let text = JSON.stringify(appdata);
-//     response.writeHead(200, "OK", { "Content-Type": "text/plain" });
-//     response.end(text);
-//   });
-// };
+app.use(logger);
 
-// const sendFile = function (response, filename) {
-//   const type = mime.getType(filename);
-
-//   fs.readFile(filename, function (err, content) {
-//     // if the error = null, then we've loaded the file successfully
-//     if (err === null) {
-//       // status code: https://httpstatuses.com
-//       response.writeHeader(200, { "Content-Type": type });
-//       response.end(content);
-//     } else {
-//       // file not found, error code 404
-//       response.writeHeader(404);
-//       response.end("404 Error: File Not Found");
-//     }
-//   });
-// };
-
-// server.listen(process.env.PORT || port);
+app.listen(process.env.PORT || 8080);
