@@ -1,7 +1,5 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-let global_entryID = 0;
-
 class hourEntry {
   constructor(date, num, reasoning) {
     this.date = date;
@@ -108,8 +106,6 @@ const clear = async function (event) {
 window.onload = function () {
   const button = document.querySelector("#submit-button");
   button.onclick = submit;
-  let error = document.getElementById("error-message");
-  error.style.opacity = 0;
 
   const json = { mode: "read" };
   const body = JSON.stringify(json);
@@ -127,7 +123,7 @@ html outline for the hour entry to shove into the grid
 <div class="hourEntry">
   <div class="info">
     <p class="date">Date: 100</p>
-    <p class="Reason">Protein: 10</p>
+    <p class="Reason">: 10</p>
     <p class="hoursLeft">Hours Left: </p>
   </div>
   <div class ="delete">

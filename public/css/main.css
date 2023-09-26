@@ -8,46 +8,11 @@
 
 body {
   margin-left: 380px;
-  font-family: "Ubuntu", Georgia, "Times New Roman", Times, serif;
+  font-family: "Roboto", Georgia, "Times New Roman", Times, serif;
   background-color: white;
 }
 
-form {
-  margin-left: 20px;
-  margin-top: 200px;
-  max-width: 100px;
-}
-
-input {
-  height: 32px;
-  width: 240px;
-  position: relative;
-}
-
-label {
-  font-size: large;
-}
-
-ul {
-  list-style: none;
-}
-
-li {
-  padding-top: 15px;
-}
-
-button {
-  margin: 20px 20px 20px 20px;
-  font-size: 20px;
-  border: var(--secondary-color);
-  height: 48px;
-  width: 96px;
-  border-radius: 10px;
-  color: white;
-  background-color: #a23535;
-  transition-duration: 0.2s;
-}
-
-button:hover {
-  background-color: #801313;
+.primary-color {
+  background-color: unset;
+  background-color: var(--primary-color);
 }

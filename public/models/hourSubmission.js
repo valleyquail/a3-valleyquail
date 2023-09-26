@@ -12,3 +12,5 @@ const HourSchema = new Schema({
 HourSchema.virtual("url").get(function () {
   return "/";
 });
+
+module.exports = mongoose.model("hours", HourSchema);

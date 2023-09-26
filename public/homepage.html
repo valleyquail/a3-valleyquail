@@ -1,59 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>CS4241 Assignment 2</title>
+    <title>CS4241 Assignment 3</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, maximum-scale=3, minimum-scale=0.5"
     />
-    <script src="js/homepage_main.js"></script>
-    <link rel="stylesheet" href="css/homepage.css" />
-    <link rel="stylesheet" href="css/sidebar.css" />
+    <meta name="description" content="RBE Membership Portal" />
+    <!-- <script src="js/main.js"></script> -->
+    <link rel="stylesheet" href="css/main.css" />
+    <!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/sidebar.css" rel="stylesheet" />
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
 
   <body>
-    <div class="sidebar" id="left">
-      <a id="RBE-logo"></a>
-      <a id="home-button">Home</a>
-      <a id="standing-button">Current Standing</a>
-      <a id="feedback-form">Feedback</a>
-    </div>
-
-    <h1>Temp Hour Submission Form</h1>
-    <form>
-      <ul>
-        <li>
-          <label for="date-of-hours">When did you complete your hours?</label>
-          <input type="date" id="date-of-hours" required />
-        </li>
-        <li>
-          <label for="number-of-hours">How many hours did you complete? </label>
-          <input type="number" id="number-of-hours" required /><a
-            style="padding-left: 15px"
-            >hours</a
+    <main class="d-flex flex-nowrap">
+      <div
+        class="d-flex flex-column flex-shrink p-3 primary-color min-vh-100"
+        style="width: 340px"
+      >
+        <a
+          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+        >
+          <img
+            class="bi pe-none me-2"
+            src="Resources/RhoBetaEpsilon_Logo_noBackground.png"
+            width="100px"
+            height="100%"
+            alt="Rho Beta Epsilon Logo"
+          />
+          <span class="fs-4">Rho Beta Epsilon</span>
+        </a>
+        <hr />
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page"> Home </a>
+          </li>
+          <li>
+            <a class="nav-link text-white"> Dashboard </a>
+          </li>
+          <li>
+            <a class="nav-link text-white"> Orders </a>
+          </li>
+          <li>
+            <a class="nav-link text-white"> Products </a>
+          </li>
+        </ul>
+        <hr />
+        <div class="dropdown">
+          <button
+            class="btn btn-dark dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
           >
-        </li>
-        <li>
-          <label for="reasoning-box">
-            Brief description of what you did to earn these hours:
-          </label>
-          <textarea id="reasoning-box" required></textarea>
-        </li>
-      </ul>
-      <a id="error-message" style="width: 200px"></a><br />
-      <input
-        type="submit"
-        value="Submit Hours"
-        formaction="/submit"
-        id="submit-button"
-      />
-    </form>
-    <div class="sidebar" id="right">
-      <h1 id="current-hours">Current Hours:</h1>
-      <div class="grid-list" id="listOfEntries"></div>
-    </div>
+            Options
+          </button>
+          <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+            <li><a class="dropdown-item">Settings</a></li>
+            <li><a class="dropdown-item">Profile</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item">Sign out</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-left: 20px; margin-top: 50px">
+        <form
+          style="
+            border: 1px;
+            border-style: solid;
+            padding: 10px;
+            border-radius: 5px;
+          "
+        >
+          <div class="mb-3">
+            <label for="hourSubmission" class="form-label"
+              >Number of Hours Completed</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              id="hourSubmission"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="dateSubmission" class="form-label"
+              >Date Completed</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="dateSubmission"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="reasonSubmission" class="form-label"
+              >Reason for Hours</label
+            >
+            <textarea
+              class="form-control"
+              id="reasonSubmission"
+              rows="5"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" id="submissionButton">
+            Submit
+          </button>
+        </form>
+        <hr />
+        <table
+          class="table table-striped table-hover table-bordered"
+          id="submissionTable"
+        >
+          <thead>
+            <tr>
+              <th scope="col" style="width: 200px">Number of Hours</th>
+              <th scope="col" style="width: 100px">Date</th>
+              <th scope="col" style="width: 200px">Reason</th>
+              <th scope="col" style="width: 25px">Delete?</th>
+            </tr>
+          </thead>
+          <tbody id="dataRepresentation"></tbody>
+        </table>
+        <hr />
+        <table
+          class="table table-striped table-hover table-bordered"
+          id="submissionTable"
+          style="width: 250px"
+        >
+          <thead>
+            <tr>
+              <th scope="col" style="width: 150px">Total Hours:</th>
+              <th scope="col" id="totalHours"></th>
+            </tr>
+          </thead>
+        </table>
+        <button class="btn btn-primary" id="modifyButton">
+          Modify Entries
+        </button>
+      </div>
+    </main>
   </body>
 </html>
