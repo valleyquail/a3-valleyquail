@@ -23,6 +23,12 @@ app.use(
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
+const password = encodeURIComponent(process.env.PASS);
+
+mongoose.connect(
+  `mongodb+srv://${process.env.MONGO_USER}:${password}@${process.env.HOST}`
+);
+
 const passport = require("passport");
 
 const GitHubStrategy = require("passport-github2").Strategy;
@@ -97,11 +103,6 @@ app.get(
   }
 );
 //__________________________________________________________________________
-const password = encodeURIComponent(process.env.PASS);
-
-mongoose.connect(
-  `mongodb+srv://${process.env.MONGO_USER}:${password}@${process.env.HOST}`
-);
 
 app.post("/findUser", async function (req, res) {
   console.log("accessing the db");
