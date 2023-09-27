@@ -38,11 +38,18 @@ of internal routing. To list a few:
 - `app.post("...")` is used for anything sending data to the middleware, and
   especially for accessing data in the server.
 
+The server supports adding, deleting, and editing data. To edit data, double
+click on the table cell, edit, and press enter.
+
 ## Technical Achievements
 
 - **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
 - **Tech Achievement 2**: I managed to acheive 100% on all Google Lighthouse
-  tests, at least running ony my local server
+  tests, at least running ony my local server:
+  Login Page:
+  ![alt text](Demos/login_lighthouse.png)
+  Homepage:
+  ![alt text](Demos/homepage_lighthouse.png)
 
   I did not attempt to use another hosting site since they appeared to be behind
   paywalls, so this is still hosted on glitch: https://a3-valleyquail.glitch.me
