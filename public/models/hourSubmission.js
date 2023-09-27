@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const { Schema } = mongoose.Schema;
+const { Schema, SchemaTypes } = mongoose;
 
 const HourSchema = new Schema({
   date: { type: Date, required: true },
-  person: { type: Schema.ObjectId, ref: "user", required: true },
+  person: { type: SchemaTypes.ObjectId, ref: "User", required: true },
   numHours: { type: Number, required: true },
   reason: { type: String, required: true },
 });

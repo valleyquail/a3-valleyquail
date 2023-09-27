@@ -1,15 +1,21 @@
 require("dotenv").config();
+const { randomUUID } = require("crypto");
 const User = require("./public/models/User");
+const Submission = require("./public/models/hourSubmission");
 const express = require("express");
 const session = require("express-session");
+const crypto = require("crypto");
 
 // const cookieParser = require("cookie-parser");
 const app = express();
 const port = 8080;
+
 app.use(express.static("public/"));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(
-  session({ secret: "keyboard cat", resave: false, saveUninitialized: false })
+  session({ secret: "keyboard cat", resave: true, saveUninitialized: false })
 );
 
 // app.use(cookieParser);
@@ -44,21 +50,23 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       console.log("GitHub Authentication Successful");
-      console.log(profile); // Log the user profile for debugging
+      // console.log(profile); // Log the user profile for debugging
       try {
-        const user = await User.findOne({ githubId: profile.id });
-
-        if (user) {
+        const user = await User.findOne({ user_id: profile.id });
+        console.log("github user: ", user);
+        if (user != null) {
+          console.log("found the user");
           return done(null, user);
         } else {
           const newUser = new User({
             email: profile.email,
             name: profile.displayName,
-            githubId: profile.id,
+            password: "auto",
+            user_id: profile.id,
           });
 
           const savedUser = await newUser.save();
-
+          console.log("Saved a new user");
           return done(null, savedUser);
         }
       } catch (error) {
@@ -81,9 +89,11 @@ app.get(
 // GitHub OAuth2 callback route
 app.get(
   "/auth/github/callback",
-  passport.authenticate("github", { failureRedirect: "/", session: false }),
-  function (req, res) {
-    res.redirect("/homepage.html");
+  passport.authenticate("github", { failureRedirect: "/", session: true }),
+  async function (req, res) {
+    req.session.user = await User.findById(req.session.passport.user._id);
+    console.log(req.session);
+    req.session.user = res.redirect("/homepage.html");
   }
 );
 //__________________________________________________________________________
@@ -93,35 +103,100 @@ mongoose.connect(
   `mongodb+srv://${process.env.MONGO_USER}:${password}@${process.env.HOST}`
 );
 
+app.post("/findUser", async function (req, res) {
+  console.log("accessing the db");
+  // debugger;
+  let data = req.body;
+  console.log("data: ", data);
+  let username = data.username;
+  try {
+    const user = await User.findOne({ name: username }).exec();
+    console.log("user: ", user);
+
+    if (user != null) {
+      if (user.password == data.password) {
+        console.log("logging in the user");
+        req.session.login = true;
+        req.session.user = user;
+        res.send(JSON.stringify("true"));
+      } else {
+        console.log("failed to log in due to password");
+        res.send(JSON.stringify("false"));
+      }
+    } else {
+      console.log("creating a new user");
+      let randNum = crypto.randomBytes(8).toString("hex");
+      const newUser = new User({
+        email: data.username,
+        name: data.username,
+        password: data.password,
+        user_id: randNum,
+      });
+
+      await newUser.save();
+      console.log("Saved a new user and logging in");
+      req.session.login = true;
+      req.session.user = newUser;
+      res.send(JSON.stringify("true"));
+    }
+  } catch (error) {
+    res.send(JSON.stringify("false"));
+    console.log("Something went wrong");
+    console.log(error);
+  }
+});
+
 app.get("/", function (req, res) {
+  req.session.name = "session";
   res.redirect("index.html");
 });
 
-app.post("/login", function (req, res) {
-  console.log("Signing in normally");
-  res.redirect("homepage.html");
+app.get("/login", function (req, res) {
+  if (req.session.login == true) {
+    console.log("Signing in normally");
+    console.log(req.session);
+    res.redirect("homepage.html");
+  }
+});
+
+app.get("/getData", async (req, res) => {
+  const result = await Submission.find({ person: req.session.user._id });
+  let body = JSON.stringify(result);
+  // console.log("data: ", body);
+  res.send(body);
 });
 
 app.post("/add", async (req, res) => {
-  const result = await collection.insertOne(req.body);
-  res.json(result);
+  let data = req.body;
+  debugger;
+  console.log("addition data: ", data);
+  let submission = new Submission({
+    date: data.date,
+    person: req.session.user._id,
+    numHours: data.numHours,
+    reason: data.reason,
+  });
+  await submission.save();
+  res.redirect("/getData");
+  console.log("saved an entry");
 });
 
 app.post("/update", async (req, res) => {
-  const result = await collection.updateOne(
-    { _id: new ObjectId(req.body._id) },
-    { $set: { name: req.body.name } }
-  );
-
-  res.json(result);
+  let data = req.body;
+  console.log("edited data: ", data);
+  debugger;
+  const query = { [`${data.updatedCell}`]: data.newVal };
+  await Submission.updateOne({ _id: data.hourID }, query);
+  console.log("should have updated");
+  res.redirect("/getData");
 });
 
-app.post("/remove", async (req, res) => {
-  const result = await collection.deleteOne({
-    _id: new ObjectId(req.body._id),
-  });
-
-  res.json(result);
+app.post("/delete", async (req, res) => {
+  let data = req.body;
+  debugger;
+  console.log("deletion data: ", data);
+  await Submission.findByIdAndDelete(data.hourID);
+  res.redirect("/getData");
 });
 
 // Start the Express server

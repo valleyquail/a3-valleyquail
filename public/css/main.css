@@ -16,3 +16,7 @@ body {
   background-color: unset;
   background-color: var(--primary-color);
 }
+
+.editable td.edit {
+  background: #f8ff88;
+}
