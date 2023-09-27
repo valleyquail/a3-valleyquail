@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-
 :root {
   --primary-color: #a23535;
   --secondary-color: #ffdf50;
@@ -8,7 +6,7 @@
 
 body {
   margin-left: 380px;
-  font-family: "Roboto", Georgia, "Times New Roman", Times, serif;
+  font-family: "Ubuntu", Georgia, "Times New Roman", Times, serif;
   background-color: white;
 }
 

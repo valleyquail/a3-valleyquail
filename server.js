@@ -159,6 +159,11 @@ app.get("/login", function (req, res) {
   }
 });
 
+app.get("/signout", function (req, res) {
+  req.session = null;
+  res.redirect("/");
+});
+
 app.get("/getData", async (req, res) => {
   const result = await Submission.find({ person: req.session.user._id });
   let body = JSON.stringify(result);
