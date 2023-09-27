@@ -41,6 +41,9 @@ of internal routing. To list a few:
 The server supports adding, deleting, and editing data. To edit data, double
 click on the table cell, edit, and press enter.
 
+The server supports adding, deleting, and editing data. To edit data, double
+click on the table cell, edit, and press enter.
+
 ## Technical Achievements
 
 - **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
