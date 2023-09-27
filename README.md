@@ -34,6 +34,7 @@ of internal routing. To list a few:
 - `app.get("/auth/github"")` and `app.get("/auth/github/callback")`
   handles the github authentication and signin
 - `app.get("/getData")` handles retrieving data from the server
+
 - `app.post("...")` is used for anything sending data to the middleware, and
   especially for accessing data in the server.
 
